@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D作品展</title>
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+<style>
+  body { margin:0; font-family:sans-serif; }
+  #info { padding:12px 16px; }
+  #title { font-size:1.4rem; font-weight:bold; }
+  #author { color:#555; }
+  model-viewer { width:100%; height:70vh; background:#f3f3f3; }
+  #err { padding:16px; color:#c00; }
+</style>
+</head>
+<body>
+<div id="info">
+  <div id="title"></div>
+  <div id="author"></div>
+</div>
+<model-viewer id="mv" ar ar-modes="webxr scene-viewer quick-look"
+  ar-placement="wall" camera-controls auto-rotate
+  shadow-intensity="1" loading="eager">
+  <button slot="ar-button"
+    style="position:absolute; bottom:16px; left:50%; transform:translateX(-50%);
+           padding:12px 24px; font-size:1.1rem; border:none; border-radius:24px;
+           background:#2d6cdf; color:#fff;">
+    ARで見る
+  </button>
+</model-viewer>
+<div id="err"></div>
+
+<script>
+(async () => {
+  const id = new URLSearchParams(location.search).get("id");
+  const err = document.getElementById("err");
+  if (!id) { err.textContent = "作品が指定されていません。"; return; }
+  const mv = document.getElementById("mv");
+  mv.src = `models/${encodeURIComponent(id)}.glb`;
+  try {
+    const works = await (await fetch("works.json")).json();
+    const w = works[id];
+    if (w) {
+      document.getElementById("title").textContent = w.title;
+      document.getElementById("author").textContent = "作：" + w.author;
+      document.title = w.title;
+      mv.alt = w.title;
+    }
+  } catch (e) {
+    console.error(e);
+  }
+})();
+</script>
+</body>
+</html>

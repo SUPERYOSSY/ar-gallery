@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D作品展 作品一覧</title>
+<style>
+  body { margin:0; font-family:sans-serif; background:#fafafa; }
+  h1 { padding:16px; margin:0; font-size:1.4rem; }
+  #list { display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:12px; padding:16px; }
+  a.card { display:block; padding:16px; background:#fff; border-radius:8px;
+           box-shadow:0 1px 3px rgba(0,0,0,.15); text-decoration:none; color:#222; }
+  a.card .t { font-weight:bold; }
+  a.card .a { color:#666; font-size:.9rem; margin-top:4px; }
+</style>
+</head>
+<body>
+<h1>3D作品展 作品一覧</h1>
+<div id="list"></div>
+<script>
+(async () => {
+  const works = await (await fetch("works.json")).json();
+  const list = document.getElementById("list");
+  for (const [id, w] of Object.entries(works)) {
+    const a = document.createElement("a");
+    a.className = "card";
+    a.href = `viewer.html?id=${id}`;
+    a.innerHTML = `<div class="t"></div><div class="a"></div>`;
+    a.querySelector(".t").textContent = w.title;
+    a.querySelector(".a").textContent = "作：" + w.author;
+    list.appendChild(a);
+  }
+})();
+</script>
+</body>
+</html>
