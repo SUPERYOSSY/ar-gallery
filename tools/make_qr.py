@@ -7,7 +7,7 @@
 import json, os, qrcode
 
 # ★公開後、自分のGitHub PagesのURLに書き換える
-BASE = "https://USERNAME.github.io/REPONAME/viewer.html?id="
+BASE = "https://superyossy.github.io/ar-gallery/viewer.html?id="
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 WORKS = os.path.join(HERE, "..", "works.json")

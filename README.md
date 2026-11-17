@@ -4,7 +4,7 @@
 
 ## 公開URL
 
-https://USERNAME.github.io/REPONAME/
+https://superyossy.github.io/ar-gallery/
 
 - 作品一覧: `index.html`
 - AR表示: `viewer.html?id=w01` のようにIDを指定
